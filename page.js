@@ -1,0 +1,13 @@
+'use client';
+import {useState} from 'react';
+const steps=[
+["NOW","Get somewhere safe","If you are on a motorway, follow the safest available route to a place of relative safety. Do not attempt repairs in a live traffic lane.","GOV.UK Highway Code — Breakdowns and incidents","https://www.gov.uk/guidance/the-highway-code/breakdowns-and-incidents-274-to-287"],
+["NEXT","Get help","Contact your breakdown or recovery provider and tell them your situation and location.","Your breakdown / recovery provider","#"],
+["THEN","Arrange recovery or repair","Once the vehicle is in a safe location, arrange recovery or repair with your provider or garage.","Your breakdown / recovery provider or garage","#"],
+["IF DELAYED","Review your journey","If the vehicle cannot be repaired promptly, consider how you will continue your journey.","Relevant transport provider / travel information","#"]];
+export default function Home(){
+ const [q,setQ]=useState(""),[show,setShow]=useState(false);
+ return <main><header><div className="logo">NEXUS<span>•</span></div><div className="tag">KNOW WHAT TO DO NEXT</div></header>
+ {!show?<section className="hero"><div className="eyebrow">NEXUS V1 · LIVE DEMO</div><h1>When something happens,<br/><em>know what to do next.</em></h1><p className="sub">Describe your situation in plain language. NEXUS turns it into clear, prioritized next steps.</p><form className="composer" onSubmit={e=>{e.preventDefault();if(q.trim())setShow(true)}}><textarea value={q} onChange={e=>setQ(e.target.value)} placeholder="Tell NEXUS what happened…"/><button>GET MY NEXT STEPS <span>↗</span></button></form><div className="examples"><span>Try:</span> “My car broke down on the motorway” · “My flight was cancelled” · “I lost my passport”</div></section>
+ :<section className="results"><button className="back" onClick={()=>setShow(false)}>← New situation</button><div className="eyebrow">YOUR NEXUS PLAN</div><h2>Vehicle breakdown</h2><p className="sub">Follow the steps in order. Each source is attached only to the action it actually supports.</p><div className="cards">{steps.map((s,i)=><article className="card" key={s[1]}><div className="num">{String(i+1).padStart(2,"0")}</div><div className="content"><div className="priority">{s[0]}</div><h3>{s[1]}</h3><p>{s[2]}</p><div className="source"><small>SOURCE FOR THIS ACTION</small><strong>{s[3]}</strong>{s[4]!="#"?<a href={s[4]} target="_blank" rel="noreferrer">OPEN OFFICIAL SOURCE ↗</a>:<span className="unlinked">Specific source required</span>}</div></div></article>)}</div><div className="feedback"><strong>Was this useful?</strong><button>Helpful</button><button>Not helpful</button></div></section>}
+ <footer>NEXUS V1 · Prototype · Source links are shown per action</footer></main>}
